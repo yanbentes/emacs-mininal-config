@@ -1,0 +1,11 @@
+/*
+/*/
+
+!.gitignore
+!early-init.el
+!init.el
+!custom.el
+!scratch*.el
+!/snippets/
+!/scratches/
+!README.org
