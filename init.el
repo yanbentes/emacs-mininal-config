@@ -13,7 +13,7 @@
 
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(menu-bar--display-line-numbers-mode-absolute)
+(menu-bar--display-line-numbers-mode-relative)
 
 (ido-mode 1)
 (tool-bar-mode 0)
@@ -29,7 +29,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-alhv  --group-directories-first")
 
-(load-theme 'timu-macos t)
+(load-theme 'gruber-darker t)
 
 (require 'smex)
 (global-set-key (kbd "M-x") 'smex)
@@ -45,7 +45,33 @@
 (require 'markdown-mode)
 (require 'markdown-preview-mode)
 
-(add-hook 'html-mode-hook
-  (lambda ()
-    ;; Default indentation is usually 2 spaces, changing to 4.
-    (set (make-local-variable 'sgml-basic-offset) 4)))
+(when (display-graphic-p)
+  (require 'all-the-icons))
+
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq neo-smart-open t)
+(setq neo-theme (if (display-graphic-p) 'ascii))
+
+(projectile-mode t)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+(require 'web-mode)
+
+(require 'php-mode)
+(require 'company-php)
+(add-hook 'php-mode-hook
+          '(lambda ()
+             (ac-php-core-eldoc-setup)
+
+             (set (make-local-variable 'company-backends)
+                  '((company-ac-php-backend company-dabbrev-code)
+                    company-capf company-files))
+
+             ;; Jump to definition (optional)
+             (define-key php-mode-map (kbd "M-]")
+               'ac-php-find-symbol-at-point)
+
+             ;; Return back (optional)
+             (define-key php-mode-map (kbd "M-[")
+               'ac-php-location-stack-back)))
