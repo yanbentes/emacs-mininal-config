@@ -15,7 +15,7 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (menu-bar--display-line-numbers-mode-relative)
 
-(ido-mode 1)
+(ido-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -31,10 +31,10 @@
 
 (load-theme 'gruber-darker t)
 
-(require 'smex)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;; (require 'smex)
+;; (global-set-key (kbd "M-x") 'smex)
+;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (require 'eglot)
 (setq eglot-autoshutdown 1)
@@ -53,8 +53,15 @@
 (setq neo-smart-open t)
 (setq neo-theme (if (display-graphic-p) 'ascii))
 
+(require 'projectile)
 (projectile-mode t)
+(setq projectile-completion-system 'ivy)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+(require 'ivy)
+(ivy-mode t)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
 
 (require 'web-mode)
 
